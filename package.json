@@ -16,7 +16,7 @@
   "author": "Egor Raybul",
   "license": "MIT",
   "scripts": {
-    "pub": "webpack && npm version patch && npm publish",
+    "pub": "webpack && npm version patch && git push origin main && npm publish",
     "webpack": "webpack",
     "link": "npm link"
   },

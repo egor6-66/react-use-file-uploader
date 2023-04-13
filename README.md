@@ -5,6 +5,9 @@
 ![forks](https://img.shields.io/github/forks/egor6-66/react-use-file-uploader?style=social)
 ![last commit](https://img.shields.io/github/last-commit/egor6-66/react-use-file-uploader/main)
 ![code size](https://img.shields.io/github/languages/code-size/egor6-66/react-use-file-uploader)
+![minzip size](https://img.shields.io/bundlephobia/minzip/react-use-file-uploader)
+![download](https://img.shields.io/npm/dt/react-use-file-uploader)
+
 
 **Description** - 🔎 Download files with preview. The user part is written in typescript, autocomplete works. The [jsmediatags](https://github.com/aadsm/jsmediatags/blob/master/dist/jsmediatags.min.js)   package is used to read metadata.
 
@@ -144,3 +147,11 @@ type Document = {
 ```
 
 ![document](https://706326.selcdn.ru/gitAndNpm/react-use-file-uploader/documents.png)
+
+---
+
+## 🔗 Links
+
+* **[codesandbox](https://codesandbox.io/s/react-use-file-uploader-k64526)**
+* **[github-repo](https://github.com/egor6-66/react-use-file-uploader)**
+* **[npm](https://www.npmjs.com/package/react-use-file-uploader)**
