@@ -1,9 +1,10 @@
-import { ReactNode, useState, FC, useEffect } from 'react';
+import { ReactNode, useState, FC, useEffect, useRef } from 'react';
 
 import { audioHandler, AudioTypes } from './entities/audio';
 import { documentHandler, DocumentTypes } from './entities/document';
 import { imageHandler, ImageTypes } from './entities/image';
 import { inputHandler, InputTypes } from './entities/input';
+import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
 import { SizeFormat } from './lib';
 
@@ -21,8 +22,14 @@ type Files<T> = T extends 'image'
     ? VideoTypes.VideoProxy
     : DocumentTypes.DocumentProxy;
 
-function useFileUploader<T>(options: InitOptions<T>): [FC<{ children: ReactNode }>, Files<T>[], boolean, FormData | null] {
-    const { accept, defaultPreview, formDataName, sizeFormat } = options;
+function useFileUploader<T>(options: InitOptions<T>): {
+    Uploader: FC<{ children: ReactNode }>;
+    open: () => void;
+    files: Files<T>[];
+    isLoading: boolean;
+    formData: FormData | null;
+} {
+    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat } = options;
 
     const [files, setFiles] = useState<any[]>([]);
     const [formData, setFormData] = useState<FormData | null>(null);
@@ -30,6 +37,16 @@ function useFileUploader<T>(options: InitOptions<T>): [FC<{ children: ReactNode 
 
     const removeItem = (id: number) => {
         setFiles((prev) => prev.filter((i) => i.id !== id));
+    };
+
+    const open = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.style.display = 'none';
+        input.accept = getAccept(accept, extension);
+        input.multiple = !!multiple;
+        input.onchange = inputOnChange;
+        input.click();
     };
 
     useEffect(() => {
@@ -40,7 +57,7 @@ function useFileUploader<T>(options: InitOptions<T>): [FC<{ children: ReactNode 
         }
     }, [files.length]);
 
-    const inputOnChange = (event: Event) => {
+    function inputOnChange(event: Event) {
         setIsLoading(true);
         const target = event.target as HTMLInputElement;
         if (!target?.files?.length) return;
@@ -77,10 +94,10 @@ function useFileUploader<T>(options: InitOptions<T>): [FC<{ children: ReactNode 
                 });
                 break;
         }
-    };
+    }
 
     const Uploader = inputHandler({ options, onChange: inputOnChange });
-    return [Uploader, files, isLoading, formData];
+    return { Uploader, open, files, isLoading, formData };
 }
 
 export type { InitOptions, ImageTypes, VideoTypes, AudioTypes, InputTypes };
