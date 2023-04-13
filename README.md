@@ -26,7 +26,7 @@ npm i react-use-file-uploader
 import useFileUploader from 'react-use-file-uploader';
 
 function ImageUploader() {
-  const {Uploader, files, isLoading, formData} = useFileUploader({
+  const {Upload, files, isLoading, formData} = useFileUploader({
     accept: 'image',
     multiple: true,
     sizeType: 'mb'
@@ -34,9 +34,9 @@ function ImageUploader() {
 
   return (
     <div>
-      <Uploader>
+      <Upload>
         <button>image upload</button>
-      </Uploader>
+      </Upload>
       <div>
         {isLoading ?
           <div>loading</div>

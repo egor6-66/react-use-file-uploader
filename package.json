@@ -4,9 +4,11 @@
   "description": "file upload library",
   "main": "./dist/index.js",
   "keywords": [
-    "react-use-file-uploader",
-    "use-file-uploader",
+    "react",
+    "file",
+    "file-uploade",
     "file-uploader",
+    "use-file-uploader",
     "react-use-file-uploader"
   ],
   "repository": {
