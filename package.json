@@ -1,6 +1,6 @@
 {
   "name": "react-use-file-uploader",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "file upload library",
   "main": "./dist/index.js",
   "keywords": [
