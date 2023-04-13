@@ -52,7 +52,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     useEffect(() => {
         if (files.length && formDataName) {
             const formData = new FormData();
-            files.forEach((file) => formData.append(formDataName, file));
+            files.forEach((file) => formData.append(formDataName, file.file));
             setFormData(formData);
         }
     }, [files.length]);
