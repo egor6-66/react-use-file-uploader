@@ -26,7 +26,7 @@ npm i react-use-file-uploader
 import useFileUploader from 'react-use-file-uploader';
 
 function ImageUploader() {
-  const {Upload, files, isLoading, formData} = useFileUploader({
+  const {Uploader, files, isLoading, formData} = useFileUploader({
     accept: 'image',
     multiple: true,
     sizeType: 'mb'
