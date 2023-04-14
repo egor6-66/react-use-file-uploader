@@ -28,6 +28,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     files: Files<T>[];
     isLoading: boolean;
     formData: FormData | null;
+    clear: () => void;
 } {
     const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat } = options;
 
@@ -37,6 +38,10 @@ function useFileUploader<T>(options: InitOptions<T>): {
 
     const removeItem = (id: number) => {
         setFiles((prev) => prev.filter((i) => i.id !== id));
+    };
+
+    const clear = () => {
+        setFiles([]);
     };
 
     const open = () => {
@@ -97,7 +102,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     }
 
     const Uploader = inputHandler({ options, onChange: inputOnChange });
-    return { Uploader, open, files, isLoading, formData };
+    return { Uploader, open, files, isLoading, formData, clear };
 }
 
 export type { InitOptions, ImageTypes, VideoTypes, AudioTypes, InputTypes };

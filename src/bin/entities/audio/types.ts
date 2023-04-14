@@ -1,6 +1,6 @@
 export type Audio = {
     id: number;
-    audioUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;

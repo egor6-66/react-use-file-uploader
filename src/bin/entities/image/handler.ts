@@ -20,7 +20,7 @@ async function imageHandler(props: imageHandlerProps): Promise<ImageProxy[]> {
         const jbj: Image = {
             id,
             size: byteConverter(file.size, sizeFormat),
-            previewUrl: previewUrl || defaultPreview || '',
+            fileUrl: previewUrl || defaultPreview || '',
             name: file.name,
             file,
         };

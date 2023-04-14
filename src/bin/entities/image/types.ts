@@ -1,6 +1,6 @@
 export type Image = {
     id: number;
-    previewUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;

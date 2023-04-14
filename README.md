@@ -98,7 +98,8 @@ If the [extension](#extension) field is not set, then all formats of the selecte
 | Item      | Description                                                                                            
 |-----------|--------------------------------------------------------------------------------------------------------
  Uploader  | FC<{ children: ReactNode }>                                                                            
- open      | () => void, opens file uploader on event                                                               
+ open      | () => void, opens file uploader on event         
+ clear      | () => void, clear the array        
  files     | The type is generated depending on the accept option  [accept](#accept)                                
  isLoading | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)    
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
@@ -110,7 +111,7 @@ If the [extension](#extension) field is not set, then all formats of the selecte
 ```typescript
 type Image = {
     id: number;
-    previewUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;
@@ -126,7 +127,7 @@ type Image = {
 ```typescript
 type Audio = {
     id: number;
-    audioUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;
@@ -149,11 +150,11 @@ type Audio = {
 ```typescript
 type Video = {
     id: number;
-    videoUrl: string;
-    previewUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;
+    previewUrl: string;
     //proxy 
     remove: () => void;
 };
@@ -166,7 +167,7 @@ type Video = {
 ```typescript
 type Document = {
     id: number;
-    documentUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;

@@ -20,7 +20,7 @@ async function documentHandler(props: documentHandlerProps): Promise<any> {
 
         const jbj: Document = {
             id,
-            documentUrl: documentUrl || defaultPreview || '',
+            fileUrl: documentUrl,
             size: byteConverter(file.size, sizeFormat),
             name: file.name,
             file,

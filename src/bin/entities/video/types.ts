@@ -1,10 +1,10 @@
 export type Video = {
     id: number;
-    videoUrl: string;
-    previewUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;
+    previewUrl: string;
 };
 
 export type VideoProxy = {

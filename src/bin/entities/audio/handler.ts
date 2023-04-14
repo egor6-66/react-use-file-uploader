@@ -20,7 +20,7 @@ async function audioHandler(props: audioHandlerProps): Promise<AudioProxy[]> {
         const albumCover = metadata?.picture?.data ? base64FromBuffer('image', metadata.picture.data) : defaultPreview || '';
         const obj: Audio = {
             id,
-            audioUrl,
+            fileUrl: audioUrl,
             name: file?.name,
             size: byteConverter(file.size, sizeFormat),
             file,

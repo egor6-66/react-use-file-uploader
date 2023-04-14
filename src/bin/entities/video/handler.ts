@@ -21,7 +21,7 @@ async function videoHandler(props: VideoHandlerProps): Promise<VideoProxy[]> {
 
         const jbj: Video = {
             id,
-            videoUrl,
+            fileUrl: videoUrl,
             size: byteConverter(file.size, sizeFormat),
             previewUrl: previewUrl || defaultPreview || '',
             name: file.name,

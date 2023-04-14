@@ -1,6 +1,6 @@
 export type Document = {
     id: number;
-    documentUrl: string;
+    fileUrl: string;
     name: string;
     size: string;
     file: File;
