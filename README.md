@@ -100,7 +100,7 @@ If the [extension](#extension) field is not set, then all formats of the selecte
  Uploader  | FC<{ children: ReactNode }>                                                                            
  open      | () => void, opens file uploader on event         
  clear      | () => void, clear the array        
- files     | The type is generated depending on the accept option  [accept](#accept)                                
+ files     | The type is generated depending on the option  [accept](#accept)                                
  isLoading | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)    
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
 
