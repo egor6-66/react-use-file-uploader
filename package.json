@@ -3,6 +3,7 @@
   "version": "0.0.15",
   "description": "file upload library",
   "main": "./dist/index.js",
+  "homepage": "http://egorra0c.beget.tech/main/react_use_file_uploader/image_uploader",
   "keywords": [
     "react",
     "file",
