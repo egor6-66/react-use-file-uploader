@@ -12,7 +12,7 @@
 The [jsmediatags](https://github.com/aadsm/jsmediatags/blob/master/dist/jsmediatags.min.js)   package is used to read
 metadata.
 
-## [🚀🚀🚀DEMO🚀🚀🚀](http://localhost:3000/main/react_use_file_uploader/image_uploader)
+## [🚀🚀🚀DEMO🚀🚀🚀](http://egorra0c.beget.tech/main/react_use_file_uploader/image_uploader)
 
 ## 💿 Installation
 
