@@ -6,10 +6,11 @@ import { Input } from './types';
 type WrapperProps = {
     onChange: (data: any) => void;
     options: Input<any>;
+    clickedFileInput: () => void;
 };
 
 const Wrapper = (props: WrapperProps) => {
-    const { options, onChange } = props;
+    const { options, onChange, clickedFileInput } = props;
     const { accept, multiple, extension } = options;
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -20,7 +21,12 @@ const Wrapper = (props: WrapperProps) => {
 
     return function ({ children }: any) {
         return (
-            <div onClick={() => inputRef?.current?.click()}>
+            <div
+                onClick={() => {
+                    inputRef?.current?.click();
+                    clickedFileInput();
+                }}
+            >
                 {children}
                 <Input />
             </div>

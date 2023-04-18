@@ -12,6 +12,7 @@ type InitOptions<T> = {
     defaultPreview?: string;
     formDataName?: string;
     sizeFormat?: SizeFormat;
+    onCancel?: () => void;
 } & InputTypes.Input<T>;
 
 type Files<T> = T extends 'image'
@@ -30,7 +31,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat } = options;
+    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onCancel } = options;
 
     const [files, setFiles] = useState<any[]>([]);
     const [formData, setFormData] = useState<FormData | null>(null);
@@ -39,6 +40,19 @@ function useFileUploader<T>(options: InitOptions<T>): {
     const removeItem = (id: number) => {
         setFiles((prev) => prev.filter((i) => i.id !== id));
     };
+
+    function fileInputClicked() {
+        window.removeEventListener('focus', handleFocusBack);
+    }
+
+    function handleFocusBack() {
+        onCancel && onCancel();
+        window.removeEventListener('focus', handleFocusBack);
+    }
+
+    function clickedFileInput() {
+        window.addEventListener('focus', handleFocusBack);
+    }
 
     const clear = () => {
         setFiles([]);
@@ -52,6 +66,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         input.multiple = !!multiple;
         input.onchange = inputOnChange;
         input.click();
+        clickedFileInput();
     };
 
     useEffect(() => {
@@ -63,6 +78,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     }, [files.length]);
 
     function inputOnChange(event: Event) {
+        fileInputClicked();
         setIsLoading(true);
         const target = event.target as HTMLInputElement;
         if (!target?.files?.length) return;
@@ -101,7 +117,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         }
     }
 
-    const Uploader = inputHandler({ options, onChange: inputOnChange });
+    const Uploader = inputHandler({ options, onChange: inputOnChange, clickedFileInput });
     return { Uploader, open, files, isLoading, formData, clear };
 }
 

@@ -29,7 +29,10 @@ function ImageUploader() {
   const {Uploader, files, isLoading, formData} = useFileUploader({
     accept: 'image',
     multiple: true,
-    sizeType: 'mb'
+    sizeType: 'mb',
+    onCancel: () => {
+      console.log('The user has closed the file upload window')
+    }
   });
 
   return (
@@ -59,7 +62,10 @@ function ImageUploader() {
   const {open, files, isLoading, formData} = useFileUploader({
     accept: 'image',
     multiple: true,
-    sizeType: 'mb'
+    sizeType: 'mb',
+    onCancel: () => {
+      console.log('The user has closed the file upload window')
+    }
   });
 
   return (
@@ -80,7 +86,7 @@ function ImageUploader() {
 
 ## Options
 
-###      * - required
+###       * - required
 
 | Option                                             | Description                                                                                                                                                                                                                                                                              | Default        
 |----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------| 
@@ -90,6 +96,7 @@ function ImageUploader() {
  <a id="formdata">formDataName</a>                  | string. You need to set values for this field if you want to form an formData                                                                                                                                                                                                            |
  <a id="extension">extension</a>                    | Valid values in array: <br> Image: .jpeg / .jpg / .gif / .png / .pict / .ico / .svg / .webp <br> Audio: .ogg / .vorbis / .wav / .mp3 / .webm <br> Video: .mp4 / .ogg / .ogv / .webm / .mov <br> Document: .txt / .rtf / .doc / .docx / .html / .pdf / .odt / .ppt / .pptx / .xls / .xlsx | all extensions 
  sizeFormat                                         | kb / mb / gb / tb                                                                                                                                                                                                                                                                        | byte           
+ onCancel                                           | () => void, Callback fired when the user closes the download window without selecting a file.                                                                                                                                                                                            |
 
 If the [extension](#extension) field is not set, then all formats of the selected file type will be allowed.
 
@@ -98,9 +105,9 @@ If the [extension](#extension) field is not set, then all formats of the selecte
 | Item      | Description                                                                                            
 |-----------|--------------------------------------------------------------------------------------------------------
  Uploader  | FC<{ children: ReactNode }>                                                                            
- open      | () => void, opens file uploader on event         
- clear      | () => void, clear the array        
- files     | The type is generated depending on the option  [accept](#accept)                                
+ open      | () => void, opens file uploader on event                                                               
+ clear     | () => void, clear the array                                                                            
+ files     | The type is generated depending on the option  [accept](#accept)                                       
  isLoading | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)    
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
 
@@ -182,6 +189,11 @@ type Document = {
 
 ## 🔗 Links
 
-* **[codesandbox](https://codesandbox.io/s/react-use-file-uploader-k64526)**
-* **[github-repo](https://github.com/egor6-66/react-use-file-uploader)**
-* **[npm](https://www.npmjs.com/package/react-use-file-uploader)**
+#### current project
+
+* **[Npm](https://www.npmjs.com/package/react-use-file-uploader)**
+* **[Github](https://github.com/egor6-66/react-use-file-uploader)**
+* **[Codesandbox](https://codesandbox.io/s/react-use-file-uploader-88uh7o)**
+
+#### other
+* **[react-theme-change](https://www.npmjs.com/package/react-theme-change)**  
