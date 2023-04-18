@@ -41,12 +41,8 @@ function useFileUploader<T>(options: InitOptions<T>): {
         setFiles((prev) => prev.filter((i) => i.id !== id));
     };
 
-    function fileInputClicked() {
-        window.removeEventListener('focus', handleFocusBack);
-    }
-
     function handleFocusBack() {
-        onCancel && onCancel();
+        onCancel && !files.length && onCancel();
         window.removeEventListener('focus', handleFocusBack);
     }
 
@@ -78,7 +74,6 @@ function useFileUploader<T>(options: InitOptions<T>): {
     }, [files.length]);
 
     function inputOnChange(event: Event) {
-        fileInputClicked();
         setIsLoading(true);
         const target = event.target as HTMLInputElement;
         if (!target?.files?.length) return;
