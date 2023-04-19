@@ -9,8 +9,8 @@ import { videoHandler, VideoTypes } from './entities/video';
 import { SizeFormat } from './lib';
 
 type AfterUploadingType<T> = {
-    type: T;
-    files: Files<T>;
+    type: InputTypes.Accept;
+    files: Files<T>[];
     formData: FormData | null;
 };
 
@@ -149,5 +149,11 @@ function useFileUploader<T>(options: InitOptions<T>): {
     return { Uploader, open, files, isLoading, formData, clear };
 }
 
-export type { InitOptions, ImageTypes, VideoTypes, AudioTypes, InputTypes, AfterUploadingType };
+type Accept = InputTypes.Accept;
+type ImageFile = ImageTypes.ImageProxy;
+type AudioFile = AudioTypes.AudioProxy;
+type VideoFile = VideoTypes.VideoProxy;
+type DocumentFile = DocumentTypes.DocumentProxy;
+
+export type { InitOptions, Accept, ImageFile, AudioFile, VideoFile, DocumentFile, AfterUploadingType };
 export default useFileUploader;
