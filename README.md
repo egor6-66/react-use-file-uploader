@@ -30,9 +30,15 @@ function ImageUploader() {
     accept: 'image',
     multiple: true,
     sizeType: 'mb',
-    onCancel: () => {
-      console.log('The user has closed the file upload window')
-    }
+    onOpen: () => {
+      console.log('onOpen');
+    },
+    onClose: () => {
+      console.log('onClose');
+    },
+    onCloseWithoutFiles: () => {
+      console.log('onCloseWithoutFiles');
+    },
   });
 
   return (
@@ -63,9 +69,15 @@ function ImageUploader() {
     accept: 'image',
     multiple: true,
     sizeType: 'mb',
-    onCancel: () => {
-      console.log('The user has closed the file upload window')
-    }
+    onOpen: () => {
+      console.log('onOpen');
+    },
+    onClose: () => {
+      console.log('onClose');
+    },
+    onCloseWithoutFiles: () => {
+      console.log('onCloseWithoutFiles');
+    },
   });
 
   return (
@@ -86,7 +98,7 @@ function ImageUploader() {
 
 ## Options
 
-###       * - required
+###         * - required
 
 | Option                                             | Description                                                                                                                                                                                                                                                                              | Default        
 |----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------| 
@@ -96,8 +108,9 @@ function ImageUploader() {
  <a id="formdata">formDataName</a>                  | string. You need to set values for this field if you want to form an formData                                                                                                                                                                                                            |
  <a id="extension">extension</a>                    | Valid values in array: <br> Image: .jpeg / .jpg / .gif / .png / .pict / .ico / .svg / .webp <br> Audio: .ogg / .vorbis / .wav / .mp3 / .webm <br> Video: .mp4 / .ogg / .ogv / .webm / .mov <br> Document: .txt / .rtf / .doc / .docx / .html / .pdf / .odt / .ppt / .pptx / .xls / .xlsx | all extensions 
  sizeFormat                                         | kb / mb / gb / tb                                                                                                                                                                                                                                                                        | byte           
- onCancel                                           | () => void, Callback fired when the user closes the download window without selecting a file.                                                                                                                                                                                            |
-
+ onOpen                                           | () => void, Сallback fired when file selector window opens.                                                                                                                                                                                                                              |
+ onClose                                           | () => void, Сallback fired when file selector window closed.                                                                                                                                                                                                                             |
+ onCloseWithoutFiles                                           | () => void, Сallback fired when file selector window closed, without Files.                                                                                                                                                                                                              |
 If the [extension](#extension) field is not set, then all formats of the selected file type will be allowed.
 
 ## Returned object
@@ -196,4 +209,5 @@ type Document = {
 * **[Codesandbox](https://codesandbox.io/s/react-use-file-uploader-88uh7o)**
 
 #### other
+
 * **[react-theme-change](https://www.npmjs.com/package/react-theme-change)**  

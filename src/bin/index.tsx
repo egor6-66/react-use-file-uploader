@@ -12,7 +12,9 @@ type InitOptions<T> = {
     defaultPreview?: string;
     formDataName?: string;
     sizeFormat?: SizeFormat;
-    onCancel?: () => void;
+    onOpen?: () => void;
+    onClose?: () => void;
+    onCloseWithoutFiles?: () => void;
 } & InputTypes.Input<T>;
 
 type Files<T> = T extends 'image'
@@ -31,8 +33,11 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onCancel } = options;
+    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onOpen, onClose, onCloseWithoutFiles } = options;
 
+    const once = useRef(false);
+
+    const [visibleModal, setVisibleModal] = useState<boolean>(false);
     const [files, setFiles] = useState<any[]>([]);
     const [formData, setFormData] = useState<FormData | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,27 +47,41 @@ function useFileUploader<T>(options: InitOptions<T>): {
     };
 
     function handleFocusBack() {
-        onCancel && !files.length && onCancel();
+        setTimeout(() => setVisibleModal(false), 200);
+        onClose && onClose();
         window.removeEventListener('focus', handleFocusBack);
     }
 
     function clickedFileInput() {
+        once.current = true;
+        setVisibleModal(true);
+        onOpen && onOpen();
         window.addEventListener('focus', handleFocusBack);
     }
 
     const clear = () => {
         setFiles([]);
+        setFormData(null);
     };
 
+    useEffect(() => {
+        once.current && !isLoading && !visibleModal && !files.length && onCloseWithoutFiles && onCloseWithoutFiles();
+    }, [visibleModal && files.length]);
+
     const open = () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.style.display = 'none';
-        input.accept = getAccept(accept, extension);
-        input.multiple = !!multiple;
-        input.onchange = inputOnChange;
-        input.click();
-        clickedFileInput();
+        if (!isLoading) {
+            clear();
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.style.display = 'none';
+            input.accept = getAccept(accept, extension);
+            input.multiple = !!multiple;
+            input.onchange = inputOnChange;
+            input.click();
+            clickedFileInput();
+        } else {
+            alert('loading in progress');
+        }
     };
 
     useEffect(() => {
@@ -80,6 +99,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         const set = (files: any) => {
             setFiles(files);
             setIsLoading(false);
+            setVisibleModal(false);
         };
         const getProps = (files: FileList) => ({
             files,
@@ -112,7 +132,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         }
     }
 
-    const Uploader = inputHandler({ options, onChange: inputOnChange, clickedFileInput });
+    const Uploader = inputHandler({ options, open });
     return { Uploader, open, files, isLoading, formData, clear };
 }
 
