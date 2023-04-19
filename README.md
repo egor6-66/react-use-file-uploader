@@ -39,6 +39,9 @@ function ImageUploader() {
     onCloseWithoutFiles: () => {
       console.log('onCloseWithoutFiles');
     },
+    onAfterUploading: (data) => {
+      console.log('onAfterUploading', data);
+    },
   });
 
   return (
@@ -78,6 +81,9 @@ function ImageUploader() {
     onCloseWithoutFiles: () => {
       console.log('onCloseWithoutFiles');
     },
+    onAfterUploading: (data) => {
+      console.log('onAfterUploading', data);
+    },
   });
 
   return (
@@ -100,18 +106,18 @@ function ImageUploader() {
 
 ###         * - required
 
-| Option                                             | Description                                                                                                                                                                                                                                                                            | Default        
-|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------| 
- <a id="accept">* accept</a>                        | image, audio, video, document                                                                                                                                                                                                                                                          |
- [multiple](http://htmlbook.ru/html/input/multiple) | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)                                                                                                                                                                                    | false          
- defaultPreview                                     | Patch to img file                                                                                                                                                                                                                                                                      |
- <a id="formdata">formDataName</a>                  | string. You need to set values for this field if you want to form an formData                                                                                                                                                                                                          |
- <a id="extension">extension</a>                    | Valid values in array: <br> Image: .jpeg / .jpg / .gif / .png / .pict / .ico / .svg / .webp <br> Audio: .ogg / .vorbis / .wav / .mp3 / .webm <br> Video: .mp4 / .ogg / .ogv / .webm / .mov <br> Document: .txt / .rtf / .doc / .docx / .html / .pdf / .odt / .ppt / .pptx / .xls / .xlsx | all extensions 
- sizeFormat                                         | kb / mb / gb / tb                                                                                                                                                                                                                                                                      | byte           
- onOpen                                           | () => void, Сallback fired when file selector window opens.                                                                                                                                                                                                                            |
- onClose                                           | () => void, Сallback fired when file selector window closed.                                                                                                                                                                                                                           |
- onCloseWithoutFiles                                           | () => void, Сallback fired when file selector window closed, without Files.                                                                                                                                                                                                            |
-
+| Option                                             | Description                                                                                                                                                                                                                                                                              | Default         
+|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------| 
+ <a id="accept">* accept</a>                        | image, audio, video, document                                                                                                                                                                                                                                                            |
+ [multiple](http://htmlbook.ru/html/input/multiple) | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)                                                                                                                                                                                      | false           
+ defaultPreview                                     | Patch to img file                                                                                                                                                                                                                                                                        |
+ <a id="formdata">formDataName</a>                  | string. You need to set values for this field if you want to form an formData                                                                                                                                                                                                            |
+ <a id="extension">extension</a>                    | Valid values in array: <br> Image: .jpeg / .jpg / .gif / .png / .pict / .ico / .svg / .webp <br> Audio: .ogg / .vorbis / .wav / .mp3 / .webm <br> Video: .mp4 / .ogg / .ogv / .webm / .mov <br> Document: .txt / .rtf / .doc / .docx / .html / .pdf / .odt / .ppt / .pptx / .xls / .xlsx | all extensions  
+ sizeFormat                                         | kb / mb / gb / tb                                                                                                                                                                                                                                                                        | byte            
+ onOpen                                           | () => void, Сallback fired when file selector window opens.                                                                                                                                                                                                                              |
+ onClose                                           | () => void, Сallback fired when file selector window closed.                                                                                                                                                                                                                             |
+ onCloseWithoutFiles                                           | () => void, Сallback fired when file selector window closed, without Files.                                                                                                                                                                                                              |
+onAfterUploading| (data: {type: [accept](#accept), files: [files](#files), formData: FormData or null}) => void;                                                                                                                                                                                           |
 If the [extension](#extension) field is not set, then all formats of the selected file type will be allowed.
 
 ## Returned object
@@ -125,7 +131,9 @@ If the [extension](#extension) field is not set, then all formats of the selecte
  isLoading | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)    
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
 
-## Files
+
+## <a id="files">* Files</a>
+
 
 ### Image
 

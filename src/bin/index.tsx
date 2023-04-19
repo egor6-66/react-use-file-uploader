@@ -8,10 +8,17 @@ import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
 import { SizeFormat } from './lib';
 
+type AfterUploadingType<T> = {
+    type: T;
+    files: Files<T>;
+    formData: FormData | null;
+};
+
 type InitOptions<T> = {
     defaultPreview?: string;
     formDataName?: string;
     sizeFormat?: SizeFormat;
+    onAfterUploading?: (data: AfterUploadingType<T>) => void;
     onOpen?: () => void;
     onClose?: () => void;
     onCloseWithoutFiles?: () => void;
@@ -33,7 +40,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onOpen, onClose, onCloseWithoutFiles } = options;
+    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } = options;
 
     const once = useRef(false);
 
@@ -100,6 +107,12 @@ function useFileUploader<T>(options: InitOptions<T>): {
             setFiles(files);
             setIsLoading(false);
             setVisibleModal(false);
+            onAfterUploading &&
+                onAfterUploading({
+                    type: accept,
+                    files,
+                    formData,
+                });
         };
         const getProps = (files: FileList) => ({
             files,
@@ -136,5 +149,5 @@ function useFileUploader<T>(options: InitOptions<T>): {
     return { Uploader, open, files, isLoading, formData, clear };
 }
 
-export type { InitOptions, ImageTypes, VideoTypes, AudioTypes, InputTypes };
+export type { InitOptions, ImageTypes, VideoTypes, AudioTypes, InputTypes, AfterUploadingType };
 export default useFileUploader;
