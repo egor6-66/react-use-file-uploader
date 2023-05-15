@@ -1,1 +1,1 @@
-export default ['.doc', '.txt', '.pdf', '.xls', '.ppt', '.js', '.ts', '.css', '.scss', '.html'];
+export default ['.doc', '.txt', '.pdf', 'word', 'xlsx', '.xls', '.ppt', '.js', '.ts', '.css', '.scss', '.html'];
