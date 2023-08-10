@@ -6,12 +6,20 @@ import { imageHandler, ImageTypes } from './entities/image';
 import { inputHandler, InputTypes } from './entities/input';
 import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
-import { SizeFormat } from './lib';
+import { sortByAccept as getSortByAccept, SizeFormat } from './lib';
+
+type SortBuAcceptType<T> = {
+    image: Files<T>[];
+    audio: Files<T>[];
+    video: Files<T>[];
+    document: Files<T>[];
+};
 
 type AfterUploadingType<T> = {
     type: InputTypes.Accept;
     files: Files<T>[];
     formData: FormData | null;
+    sortByAccept?: SortBuAcceptType<T>;
 };
 
 type InitOptions<T> = {
@@ -103,7 +111,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         setIsLoading(true);
         const target = event.target as HTMLInputElement;
         if (!target?.files?.length) return;
-        const set = (files: any) => {
+        const set = (files: any, sortByAccept?: any) => {
             setFiles(files);
             setIsLoading(false);
             setVisibleModal(false);
@@ -112,6 +120,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
                     type: accept,
                     files,
                     formData,
+                    sortByAccept,
                 });
         };
         const getProps = (files: any) => ({
@@ -128,17 +137,21 @@ function useFileUploader<T>(options: InitOptions<T>): {
                         const accept = file.type.split('/')[0];
                         switch (accept) {
                             case 'image':
-                                return imageHandler(getProps([file]));
+                                const img = await imageHandler(getProps([file]));
+                                return img[0];
                             case 'audio':
-                                return audioHandler(getProps([file]));
+                                const audio = await audioHandler(getProps([file]));
+                                return audio[0];
                             case 'video':
-                                return videoHandler(getProps([file]));
+                                const video = await videoHandler(getProps([file]));
+                                return video[0];
                             case 'text':
-                                return documentHandler(getProps([file]));
+                                const text = await documentHandler(getProps([file]));
+                                return text[0];
                         }
                     })
                 ).then((files) => {
-                    set(files);
+                    set(files, getSortByAccept(files));
                 });
                 break;
             case 'image':

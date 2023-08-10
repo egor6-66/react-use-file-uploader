@@ -26,10 +26,10 @@ async function audioHandler(props: audioHandlerProps): Promise<AudioProxy[]> {
             file,
             album: {
                 coverUrl: albumCover,
-                artist: metadata.artist || '',
-                name: metadata.album || '',
-                title: metadata.title || '',
-                year: metadata.year || '',
+                artist: metadata?.artist || '',
+                name: metadata?.album || '',
+                title: metadata?.title || '',
+                year: metadata?.year || '',
             },
         };
         audios.push(fileProxy(obj, removeItem));

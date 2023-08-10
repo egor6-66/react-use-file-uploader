@@ -10,14 +10,15 @@ type Metadata = {
     year: string;
 };
 
-function readFileMetadata(file: File): Promise<Metadata> {
+function readFileMetadata(file: File): Promise<Metadata | null> {
     return new Promise(async (resolve, reject) => {
         fileMetadata.read(file, {
             onSuccess({ tags }: { tags: Metadata }) {
                 resolve(tags);
             },
             onError(error: any) {
-                reject(error);
+                resolve(null);
+                // reject(error);
             },
         });
     });
