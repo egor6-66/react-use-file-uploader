@@ -6,7 +6,7 @@ import { imageHandler, ImageTypes } from './entities/image';
 import { inputHandler, InputTypes } from './entities/input';
 import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
-import { sortByAccept as getSortByAccept, SizeFormat } from './lib';
+import { sortByAccept as getSortByAccept, SizeFormat, forApi } from './lib';
 
 type SortBuAcceptType<T> = {
     image: Files<T>[];
@@ -44,6 +44,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     Uploader: FC<{ children: ReactNode }>;
     open: () => void;
     files: Files<T>[];
+    sortByAccept: Files<T>[];
     isLoading: boolean;
     formData: FormData | null;
     clear: () => void;
@@ -54,6 +55,8 @@ function useFileUploader<T>(options: InitOptions<T>): {
 
     const [visibleModal, setVisibleModal] = useState<boolean>(false);
     const [files, setFiles] = useState<any[]>([]);
+    const [sortByAccept, setSortByAccept] = useState<any[]>([]);
+    const [sortForApi, setSortForApi] = useState<any[]>([]);
     const [formData, setFormData] = useState<FormData | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -113,6 +116,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         if (!target?.files?.length) return;
         const set = (files: any, sortByAccept?: any) => {
             setFiles(files);
+            setSortByAccept(sortByAccept);
             setIsLoading(false);
             setVisibleModal(false);
             onAfterUploading &&
@@ -178,7 +182,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     }
 
     const Uploader = inputHandler({ options, open });
-    return { Uploader, open, files, isLoading, formData, clear };
+    return { Uploader, open, files, sortByAccept, isLoading, formData, clear };
 }
 
 type Accept = InputTypes.Accept;
