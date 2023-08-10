@@ -87,7 +87,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
             input.click();
             clickedFileInput();
         } else {
-            alert('loading in progress');
+            // alert('loading in progress');
         }
     };
 
@@ -114,7 +114,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
                     formData,
                 });
         };
-        const getProps = (files: FileList) => ({
+        const getProps = (files: any) => ({
             files,
             removeItem,
             defaultPreview,
@@ -122,6 +122,25 @@ function useFileUploader<T>(options: InitOptions<T>): {
         });
 
         switch (accept) {
+            case 'all':
+                Promise.all(
+                    Array.from(target.files).map(async (file) => {
+                        const accept = file.type.split('/')[0];
+                        switch (accept) {
+                            case 'image':
+                                return imageHandler(getProps([file]));
+                            case 'audio':
+                                return audioHandler(getProps([file]));
+                            case 'video':
+                                return videoHandler(getProps([file]));
+                            case 'text':
+                                return documentHandler(getProps([file]));
+                        }
+                    })
+                ).then((files) => {
+                    set(files);
+                });
+                break;
             case 'image':
                 imageHandler(getProps(target.files)).then((files) => {
                     set(files);

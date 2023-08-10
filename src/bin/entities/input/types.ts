@@ -3,7 +3,7 @@ import { DocumentTypes } from '../document';
 import { ImageTypes } from '../image';
 import { VideoTypes } from '../video';
 
-export type Accept = 'image' | 'audio' | 'video' | 'document';
+export type Accept = 'image' | 'audio' | 'video' | 'document' | 'all';
 export type Extension<T> = T extends 'image'
     ? ImageTypes.Extension[]
     : T extends 'audio'
