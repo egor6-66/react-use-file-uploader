@@ -147,16 +147,16 @@ function useFileUploader<T>(options: InitOptions<T>): {
                         switch (accept) {
                             case 'image':
                                 const img = await imageHandler(getProps([file]));
-                                return img[0];
+                                return {...img[0], id: new Date().valueOf()};
                             case 'audio':
                                 const audio = await audioHandler(getProps([file]));
-                                return audio[0];
+                                return {...audio[0], id: new Date().valueOf()};
                             case 'video':
                                 const video = await videoHandler(getProps([file]));
-                                return video[0];
+                                return {...video[0], id: new Date().valueOf()};
                             case 'text':
                                 const text = await documentHandler(getProps([file]));
-                                return text[0];
+                                return {...text[0], id: new Date().valueOf()};
                         }
                     })
                 ).then((files) => {
