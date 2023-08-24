@@ -1,25 +1,30 @@
 import { ReactNode, useState, FC, useEffect, useRef } from 'react';
 
 import { audioHandler, AudioTypes } from './entities/audio';
+import {AudioProxy} from "./entities/audio/types";
 import { documentHandler, DocumentTypes } from './entities/document';
+import {DocumentProxy} from "./entities/document/types";
 import { imageHandler, ImageTypes } from './entities/image';
+import {ImageProxy} from "./entities/image/types";
 import { inputHandler, InputTypes } from './entities/input';
 import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
+import {VideoProxy} from "./entities/video/types";
 import { sortByAccept as getSortByAccept, SizeFormat, forApi } from './lib';
 
-type SortBuAcceptType<T> = {
-    image: Files<T>[];
-    audio: Files<T>[];
-    video: Files<T>[];
-    document: Files<T>[];
+
+type SortBuAcceptType = {
+    image: ImageProxy[];
+    audio: AudioProxy[];
+    video: VideoProxy[];
+    document: DocumentProxy[];
 };
 
 type AfterUploadingType<T> = {
     type: InputTypes.Accept;
     files: Files<T>[];
     formData: FormData | null;
-    sortByAccept?: SortBuAcceptType<T>;
+    sortByAccept?: SortBuAcceptType;
 };
 
 type InitOptions<T> = {
