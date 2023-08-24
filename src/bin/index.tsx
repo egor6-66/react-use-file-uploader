@@ -191,5 +191,5 @@ type AudioFile = AudioTypes.AudioProxy;
 type VideoFile = VideoTypes.VideoProxy;
 type DocumentFile = DocumentTypes.DocumentProxy;
 
-export type { InitOptions, Accept, ImageFile, AudioFile, VideoFile, DocumentFile, AfterUploadingType };
+export type { InitOptions, Accept, ImageFile, AudioFile, VideoFile, DocumentFile, AfterUploadingType, SortBuAcceptType };
 export default useFileUploader;
