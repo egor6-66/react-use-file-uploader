@@ -10,7 +10,7 @@ import { inputHandler, InputTypes } from './entities/input';
 import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
 import {VideoProxy} from "./entities/video/types";
-import { sortByAccept as getSortByAccept, SizeFormat, forApi } from './lib';
+import { sortByAccept as getSortByAccept, SizeFormat, getRandomInt } from './lib';
 
 
 type SortBuAcceptType = {
@@ -147,16 +147,16 @@ function useFileUploader<T>(options: InitOptions<T>): {
                         switch (accept) {
                             case 'image':
                                 const img = await imageHandler(getProps([file]));
-                                return {...img[0], id: new Date().valueOf()};
+                                return {...img[0], id: getRandomInt(1000)};
                             case 'audio':
                                 const audio = await audioHandler(getProps([file]));
-                                return {...audio[0], id: new Date().valueOf()};
+                                return {...audio[0], id: getRandomInt(1000)};
                             case 'video':
                                 const video = await videoHandler(getProps([file]));
-                                return {...video[0], id: new Date().valueOf()};
+                                return {...video[0], id: getRandomInt(1000)};
                             case 'text':
                                 const text = await documentHandler(getProps([file]));
-                                return {...text[0], id: new Date().valueOf()};
+                                return {...text[0], id: getRandomInt(1000)};
                         }
                     })
                 ).then((files) => {
