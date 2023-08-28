@@ -1,17 +1,16 @@
 import { ReactNode, useState, FC, useEffect, useRef } from 'react';
 
 import { audioHandler, AudioTypes } from './entities/audio';
-import {AudioProxy} from "./entities/audio/types";
+import { AudioProxy } from './entities/audio/types';
 import { documentHandler, DocumentTypes } from './entities/document';
-import {DocumentProxy} from "./entities/document/types";
+import { DocumentProxy } from './entities/document/types';
 import { imageHandler, ImageTypes } from './entities/image';
-import {ImageProxy} from "./entities/image/types";
+import { ImageProxy } from './entities/image/types';
 import { inputHandler, InputTypes } from './entities/input';
 import getAccept from './entities/input/getAccept';
 import { videoHandler, VideoTypes } from './entities/video';
-import {VideoProxy} from "./entities/video/types";
+import { VideoProxy } from './entities/video/types';
 import { sortByAccept as getSortByAccept, SizeFormat, getRandomInt } from './lib';
-
 
 type SortBuAcceptType = {
     image: ImageProxy[];
@@ -147,16 +146,16 @@ function useFileUploader<T>(options: InitOptions<T>): {
                         switch (accept) {
                             case 'image':
                                 const img = await imageHandler(getProps([file]));
-                                return {...img[0], id: getRandomInt(1000)};
+                                return { ...img[0], id: getRandomInt(1000) };
                             case 'audio':
                                 const audio = await audioHandler(getProps([file]));
-                                return {...audio[0], id: getRandomInt(1000)};
+                                return { ...audio[0], id: getRandomInt(1000) };
                             case 'video':
                                 const video = await videoHandler(getProps([file]));
-                                return {...video[0], id: getRandomInt(1000)};
-                            case 'text':
+                                return { ...video[0], id: getRandomInt(1000) };
+                            default:
                                 const text = await documentHandler(getProps([file]));
-                                return {...text[0], id: getRandomInt(1000)};
+                                return { ...text[0], id: getRandomInt(1000) };
                         }
                     })
                 ).then((files) => {
