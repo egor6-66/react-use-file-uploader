@@ -130,7 +130,8 @@ If the [extension](#extension) field is not set, then all formats of the selecte
  files     | The type is generated depending on the option  [accept](#accept)                                       
  isLoading | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)    
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
-
+ formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
+sortByAccept | image: Image[], audio: Audio[], video: Video[], document: Document[]
 
 ## <a id="files">* Files</a>
 
@@ -144,7 +145,6 @@ type Image = {
     name: string;
     size: string;
     file: File;
-    //proxy 
     remove: () => void;
 };
 ```
@@ -167,7 +167,6 @@ type Audio = {
         title: string;
         year: string;
     };
-    //proxy 
     remove: () => void;
 };
 ```
@@ -184,7 +183,6 @@ type Video = {
     size: string;
     file: File;
     previewUrl: string;
-    //proxy 
     remove: () => void;
 };
 ```
@@ -200,7 +198,6 @@ type Document = {
     name: string;
     size: string;
     file: File;
-    //proxy 
     remove: () => void;
 };
 ```

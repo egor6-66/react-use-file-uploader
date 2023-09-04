@@ -12,7 +12,7 @@ import { videoHandler, VideoTypes } from './entities/video';
 import { VideoProxy } from './entities/video/types';
 import { sortByAccept as getSortByAccept, SizeFormat, getRandomInt } from './lib';
 
-type SortBuAcceptType = {
+type SortByAcceptType = {
     image: ImageProxy[];
     audio: AudioProxy[];
     video: VideoProxy[];
@@ -23,7 +23,7 @@ type AfterUploadingType<T> = {
     type: InputTypes.Accept;
     files: Files<T>[];
     formData: FormData | null;
-    sortByAccept?: SortBuAcceptType;
+    sortByAccept?: SortByAcceptType;
 };
 
 type InitOptions<T> = {
@@ -195,5 +195,5 @@ type AudioFile = AudioTypes.AudioProxy;
 type VideoFile = VideoTypes.VideoProxy;
 type DocumentFile = DocumentTypes.DocumentProxy;
 
-export type { InitOptions, Accept, ImageFile, AudioFile, VideoFile, DocumentFile, AfterUploadingType, SortBuAcceptType };
+export type { InitOptions, Accept, ImageFile, AudioFile, VideoFile, DocumentFile, AfterUploadingType, SortByAcceptType };
 export default useFileUploader;
