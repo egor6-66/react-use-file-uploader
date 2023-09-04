@@ -12,7 +12,7 @@
 The [jsmediatags](https://github.com/aadsm/jsmediatags/blob/master/dist/jsmediatags.min.js)   package is used to read
 metadata.
 
-## [🚀🚀🚀DEMO🚀🚀🚀](http://egorra0c.beget.tech/main/react_use_file_uploader/image_uploader)
+## [🚀🚀🚀DEMO🚀🚀🚀](https://codesandbox.io/s/react-use-file-uploader-88uh7o)
 
 ## 💿 Installation
 
@@ -108,7 +108,7 @@ function ImageUploader() {
 
 | Option                                             | Description                                                                                                                                                                                                                                                                                      | Default         
 |----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------| 
- <a id="accept">* accept</a>                        | image, audio, video, document, all                                                                                                                                                                                                                                                               |
+ <a id="accept">* accept</a>                        | all, image, audio, video, document                                                                                                                                                                                                                                                               |
  [multiple](http://htmlbook.ru/html/input/multiple) | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)                                                                                                                                                                                              | false           
  defaultPreview                                     | Patch to img file                                                                                                                                                                                                                                                                                |
  <a id="formdata">formDataName</a>                  | string. You need to set values for this field if you want to form an formData                                                                                                                                                                                                                    |
