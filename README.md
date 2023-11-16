@@ -126,7 +126,7 @@ If the [extension](#extension) field is not set, then all formats of the selecte
 | Item      | Description                                                                                            
 |-----------|--------------------------------------------------------------------------------------------------------
  Uploader  | FC<{ children: ReactNode }>                                                                            
-DragContainer| FC<{ref: RefObject<any>} & HTMLAttributes\<HTMLDivElement>/ wrapper for drag and drop files            |
+ dropContainerRef| RefObject<any>           |
  open      | () => void, opens file uploader on event                                                               
  clear     | () => void, clear the array                                                                            
  files     | The type is generated depending on the option  [accept](#accept)                                       

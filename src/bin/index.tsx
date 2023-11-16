@@ -4,7 +4,6 @@ import { audioHandler, AudioTypes } from './entities/audio';
 import { AudioProxy } from './entities/audio/types';
 import { documentHandler, DocumentTypes } from './entities/document';
 import { DocumentProxy } from './entities/document/types';
-import dragContainerHandler from './entities/drag-container';
 import { imageHandler, ImageTypes } from './entities/image';
 import { ImageProxy } from './entities/image/types';
 import { inputHandler, InputTypes } from './entities/input';
@@ -47,11 +46,7 @@ type Files<T> = T extends 'image'
 
 function useFileUploader<T>(options: InitOptions<T>): {
     Uploader: FC<{ children: ReactNode }>;
-    DragContainer: FC<
-        {
-            ref: RefObject<any>;
-        } & HTMLAttributes<HTMLDivElement>
-    >;
+    dropContainerRef: RefObject<any>;
     copyFromClipboard: () => void;
     open: () => void;
     files: Files<T>[];
@@ -199,9 +194,31 @@ function useFileUploader<T>(options: InitOptions<T>): {
         });
     };
 
+    const dropContainerRef = useRef<any>(null);
+
     const Uploader = inputHandler({ options, open });
-    const DragContainer: any = dragContainerHandler({ inputOnChange });
-    return { Uploader, open, files, sortByAccept, isLoading, formData, clear, DragContainer, copyFromClipboard };
+
+    useEffect(() => {
+        if (dropContainerRef.current) {
+            const { current } = dropContainerRef;
+            current.addEventListener('dragover', (e: any) => e.preventDefault(), false);
+            current.addEventListener(
+                'drop',
+                (e: any) => {
+                    e.preventDefault();
+                    inputOnChange(e);
+                },
+                false
+            );
+
+            return function cleanup() {
+                current.removeEventListener('dragover', null, false);
+                current.removeEventListener('drop', null, false);
+            };
+        }
+    }, [dropContainerRef.current]);
+
+    return { Uploader, open, files, sortByAccept, isLoading, formData, clear, dropContainerRef, copyFromClipboard };
 }
 
 type Accept = InputTypes.Accept;
