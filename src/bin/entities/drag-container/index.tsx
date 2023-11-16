@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { ReactNode, HTMLAttributes } from 'react';
 
 type WrapperProps = {
     inputOnChange: (e: any) => void;
 };
 
+type Container = {
+    children: ReactNode;
+} & HTMLAttributes<HTMLDivElement>;
+
 const Wrapper = (props: WrapperProps) => {
     const { inputOnChange } = props;
 
-    return function ({ children }: any) {
+    return function (containerProps: Container) {
+        const { children, ...other } = containerProps;
+
         const onDropHandler = (e: any) => {
             e.preventDefault();
             inputOnChange(e);
         };
 
         return (
-            <div onDragStart={(e) => e.preventDefault()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => onDropHandler(e)}>
+            <div {...other} onDragStart={(e) => e.preventDefault()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => onDropHandler(e)}>
                 {children}
             </div>
         );

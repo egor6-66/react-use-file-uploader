@@ -35,7 +35,6 @@ type InitOptions<T> = {
     onOpen?: () => void;
     onClose?: () => void;
     onCloseWithoutFiles?: () => void;
-    globalUpload?: boolean;
 } & InputTypes.Input<T>;
 
 type Files<T> = T extends 'image'
@@ -49,6 +48,7 @@ type Files<T> = T extends 'image'
 function useFileUploader<T>(options: InitOptions<T>): {
     Uploader: FC<{ children: ReactNode }>;
     DragContainer: FC<{ children: ReactNode }>;
+    copyFromClipboard: () => void;
     open: () => void;
     files: Files<T>[];
     sortByAccept: Files<T>[];
@@ -56,8 +56,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { globalUpload, accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } =
-        options;
+    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } = options;
 
     const once = useRef(false);
 
@@ -190,16 +189,15 @@ function useFileUploader<T>(options: InitOptions<T>): {
         }
     }
 
-    useEffect(() => {
-        globalUpload &&
-            window.addEventListener('paste', (e: any) => {
-                inputOnChange(e);
-            });
-    }, []);
+    const copyFromClipboard = () => {
+        window.addEventListener('paste', (e: any) => {
+            inputOnChange(e);
+        });
+    };
 
     const Uploader = inputHandler({ options, open });
     const DragContainer = dragContainerHandler({ inputOnChange });
-    return { Uploader, open, files, sortByAccept, isLoading, formData, clear, DragContainer };
+    return { Uploader, open, files, sortByAccept, isLoading, formData, clear, DragContainer, copyFromClipboard };
 }
 
 type Accept = InputTypes.Accept;
