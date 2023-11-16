@@ -117,7 +117,8 @@ function ImageUploader() {
  onOpen                                           | () => void, Сallback fired when file selector window opens.                                                                                                                                                                                                                                      |
  onClose                                           | () => void, Сallback fired when file selector window closed.                                                                                                                                                                                                                                     |
  onCloseWithoutFiles                                           | () => void, Сallback fired when file selector window closed, without Files.                                                                                                                                                                                                                      |
-onAfterUploading| (data: {type: [accept](#accept), files: [files](#files), formData: FormData or null}) => void;                                                                                                                                                                                                   |
+onAfterUploading| (data: {type: [accept](#accept), files: [files](#files), formData: FormData or null}) => void;                                                                                                                                                                                                   
+globalUpload| [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)  / get files from clipboard                                                                                                                                                                  |
 If the [extension](#extension) field is not set, then all formats of the selected file type will be allowed.
 
 ## Returned object
@@ -125,13 +126,15 @@ If the [extension](#extension) field is not set, then all formats of the selecte
 | Item      | Description                                                                                            
 |-----------|--------------------------------------------------------------------------------------------------------
  Uploader  | FC<{ children: ReactNode }>                                                                            
+DragContainer| FC<{ children: ReactNode }> / wrapper for drag and drop files                                          |
  open      | () => void, opens file uploader on event                                                               
  clear     | () => void, clear the array                                                                            
  files     | The type is generated depending on the option  [accept](#accept)                                       
  isLoading | [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)    
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
  formData  | [FormData](https://javascript.info/formdata). You need to set a [formDataName](#formdata)  to generate 
-sortByAccept | image: Image[], audio: Audio[], video: Video[], document: Document[]
+sortByAccept | image: Image[], audio: Audio[], video: Video[], document: Document[]                                   
+
 
 ## <a id="files">* Files</a>
 

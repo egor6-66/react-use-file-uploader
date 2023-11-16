@@ -4,6 +4,7 @@ import { audioHandler, AudioTypes } from './entities/audio';
 import { AudioProxy } from './entities/audio/types';
 import { documentHandler, DocumentTypes } from './entities/document';
 import { DocumentProxy } from './entities/document/types';
+import dragContainerHandler from './entities/drag-container';
 import { imageHandler, ImageTypes } from './entities/image';
 import { ImageProxy } from './entities/image/types';
 import { inputHandler, InputTypes } from './entities/input';
@@ -34,6 +35,7 @@ type InitOptions<T> = {
     onOpen?: () => void;
     onClose?: () => void;
     onCloseWithoutFiles?: () => void;
+    globalUpload?: boolean;
 } & InputTypes.Input<T>;
 
 type Files<T> = T extends 'image'
@@ -46,6 +48,7 @@ type Files<T> = T extends 'image'
 
 function useFileUploader<T>(options: InitOptions<T>): {
     Uploader: FC<{ children: ReactNode }>;
+    DragContainer: FC<{ children: ReactNode }>;
     open: () => void;
     files: Files<T>[];
     sortByAccept: Files<T>[];
@@ -53,7 +56,8 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } = options;
+    const { globalUpload, accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } =
+        options;
 
     const once = useRef(false);
 
@@ -114,9 +118,10 @@ function useFileUploader<T>(options: InitOptions<T>): {
         }
     }, [files.length]);
 
-    function inputOnChange(event: Event) {
+    function inputOnChange(event: any) {
         setIsLoading(true);
-        const target = event.target as HTMLInputElement;
+        const target = (event?.clipboardData as HTMLInputElement) || (event?.dataTransfer as HTMLInputElement) || (event.target as HTMLInputElement);
+
         if (!target?.files?.length) return;
         const set = (files: any, sortByAccept?: any) => {
             setFiles(files);
@@ -185,8 +190,16 @@ function useFileUploader<T>(options: InitOptions<T>): {
         }
     }
 
+    useEffect(() => {
+        globalUpload &&
+            window.addEventListener('paste', (e: any) => {
+                inputOnChange(e);
+            });
+    }, []);
+
     const Uploader = inputHandler({ options, open });
-    return { Uploader, open, files, sortByAccept, isLoading, formData, clear };
+    const DragContainer = dragContainerHandler({ inputOnChange });
+    return { Uploader, open, files, sortByAccept, isLoading, formData, clear, DragContainer };
 }
 
 type Accept = InputTypes.Accept;
