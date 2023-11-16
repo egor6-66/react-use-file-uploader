@@ -1,4 +1,4 @@
-import { ReactNode, useState, FC, useEffect, useRef } from 'react';
+import { ReactNode, useState, FC, useEffect, useRef, HTMLAttributes, RefObject } from 'react';
 
 import { audioHandler, AudioTypes } from './entities/audio';
 import { AudioProxy } from './entities/audio/types';
@@ -47,7 +47,11 @@ type Files<T> = T extends 'image'
 
 function useFileUploader<T>(options: InitOptions<T>): {
     Uploader: FC<{ children: ReactNode }>;
-    DragContainer: FC<{ children: ReactNode }>;
+    DragContainer: FC<
+        {
+            ref: RefObject<any>;
+        } & HTMLAttributes<HTMLDivElement>
+    >;
     copyFromClipboard: () => void;
     open: () => void;
     files: Files<T>[];
@@ -196,7 +200,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
     };
 
     const Uploader = inputHandler({ options, open });
-    const DragContainer = dragContainerHandler({ inputOnChange });
+    const DragContainer: any = dragContainerHandler({ inputOnChange });
     return { Uploader, open, files, sortByAccept, isLoading, formData, clear, DragContainer, copyFromClipboard };
 }
 
