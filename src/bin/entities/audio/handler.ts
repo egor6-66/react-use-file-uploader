@@ -1,5 +1,5 @@
 import { Audio, AudioProxy } from './types';
-import { readFile, readFileMetadata, base64FromBuffer, byteConverter, SizeFormat } from '../../lib';
+import { readFile, readFileMetadata, blobUrlFromBuffer, byteConverter, SizeFormat } from '../../lib';
 import fileProxy from '../proxy';
 
 type audioHandlerProps = {
@@ -17,7 +17,7 @@ async function audioHandler(props: audioHandlerProps): Promise<AudioProxy[]> {
     for await (const file of Array.from(files)) {
         const audioUrl = await readFile(file);
         const metadata = await readFileMetadata(file);
-        const albumCover = metadata?.picture?.data ? base64FromBuffer('image', metadata.picture.data) : defaultPreview || '';
+        const albumCover = metadata?.picture?.data ? blobUrlFromBuffer(metadata.picture.data) : defaultPreview || '';
         const obj: Audio = {
             id,
             fileUrl: audioUrl,
