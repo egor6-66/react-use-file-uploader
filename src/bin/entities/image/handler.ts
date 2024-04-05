@@ -1,3 +1,5 @@
+import imageCompression from 'browser-image-compression';
+
 import { Image, ImageProxy } from './types';
 import { readFile, byteConverter, SizeFormat } from '../../lib';
 import fileProxy from '../proxy';
@@ -7,22 +9,25 @@ type imageHandlerProps = {
     defaultPreview: string | undefined;
     sizeFormat?: SizeFormat;
     removeItem: (id: number) => void;
+    maxImgSizeMb?: number;
 };
 
 async function imageHandler(props: imageHandlerProps): Promise<ImageProxy[]> {
-    const { files, removeItem, sizeFormat, defaultPreview } = props;
+    const { maxImgSizeMb, files, removeItem, sizeFormat, defaultPreview } = props;
 
     const images: ImageProxy[] = [];
     let id = 0;
 
     for await (const file of Array.from(files)) {
-        const previewUrl = await readFile(file);
+        const updFile = maxImgSizeMb ? await imageCompression(file, { maxSizeMB: 6 }) : file;
+
+        const previewUrl = await readFile(updFile);
         const jbj: Image = {
             id,
-            size: byteConverter(file.size, sizeFormat),
+            size: byteConverter(updFile.size, sizeFormat),
             fileUrl: previewUrl || defaultPreview || '',
-            name: file.name,
-            file,
+            name: updFile.name,
+            file: updFile,
         };
         images.push(fileProxy(jbj, removeItem));
         id++;

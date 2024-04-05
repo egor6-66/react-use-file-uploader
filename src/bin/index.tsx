@@ -34,6 +34,7 @@ type InitOptions<T> = {
     onOpen?: () => void;
     onClose?: () => void;
     onCloseWithoutFiles?: () => void;
+    maxImgSizeMb?: number;
 } & InputTypes.Input<T>;
 
 type Files<T> = T extends 'image'
@@ -55,7 +56,8 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } = options;
+    const { maxImgSizeMb, accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } =
+        options;
 
     const once = useRef(false);
 
@@ -121,6 +123,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
         const target = (event?.clipboardData as HTMLInputElement) || (event?.dataTransfer as HTMLInputElement) || (event.target as HTMLInputElement);
 
         if (!target?.files?.length) return;
+
         const set = (files: any, sortByAccept?: any) => {
             setFiles(files);
             setSortByAccept(sortByAccept);
@@ -139,6 +142,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
             removeItem,
             defaultPreview,
             sizeFormat,
+            maxImgSizeMb,
         });
 
         switch (accept) {
