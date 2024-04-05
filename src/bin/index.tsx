@@ -35,6 +35,7 @@ type InitOptions<T> = {
     onClose?: () => void;
     onCloseWithoutFiles?: () => void;
     maxImgSizeMb?: number;
+    maxImgWidthOrHeight?: number;
 } & InputTypes.Input<T>;
 
 type Files<T> = T extends 'image'
@@ -56,8 +57,20 @@ function useFileUploader<T>(options: InitOptions<T>): {
     formData: FormData | null;
     clear: () => void;
 } {
-    const { maxImgSizeMb, accept, multiple, extension, defaultPreview, formDataName, sizeFormat, onAfterUploading, onOpen, onClose, onCloseWithoutFiles } =
-        options;
+    const {
+        maxImgWidthOrHeight,
+        maxImgSizeMb,
+        accept,
+        multiple,
+        extension,
+        defaultPreview,
+        formDataName,
+        sizeFormat,
+        onAfterUploading,
+        onOpen,
+        onClose,
+        onCloseWithoutFiles,
+    } = options;
 
     const once = useRef(false);
 
@@ -143,6 +156,7 @@ function useFileUploader<T>(options: InitOptions<T>): {
             defaultPreview,
             sizeFormat,
             maxImgSizeMb,
+            maxImgWidthOrHeight,
         });
 
         switch (accept) {

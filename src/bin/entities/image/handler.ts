@@ -10,16 +10,18 @@ type imageHandlerProps = {
     sizeFormat?: SizeFormat;
     removeItem: (id: number) => void;
     maxImgSizeMb?: number;
+    maxImgWidthOrHeight?: number;
 };
 
 async function imageHandler(props: imageHandlerProps): Promise<ImageProxy[]> {
-    const { maxImgSizeMb, files, removeItem, sizeFormat, defaultPreview } = props;
+    const { maxImgWidthOrHeight, maxImgSizeMb, files, removeItem, sizeFormat, defaultPreview } = props;
 
     const images: ImageProxy[] = [];
     let id = 0;
 
     for await (const file of Array.from(files)) {
-        const updFile = maxImgSizeMb ? await imageCompression(file, { maxSizeMB: 6 }) : file;
+        const updFile =
+            maxImgSizeMb || maxImgWidthOrHeight ? await imageCompression(file, { maxSizeMB: maxImgSizeMb, maxWidthOrHeight: maxImgWidthOrHeight }) : file;
 
         const previewUrl = await readFile(updFile);
         const jbj: Image = {
