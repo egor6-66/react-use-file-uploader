@@ -1,6 +1,6 @@
 {
   "name": "react-use-file-uploader",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "file upload library",
   "main": "./dist/index.js",
   "homepage": "https://codesandbox.io/s/react-use-file-uploader-88uh7o",
