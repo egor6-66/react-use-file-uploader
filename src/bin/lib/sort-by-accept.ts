@@ -7,6 +7,7 @@ function sortByAccept(files: any[]) {
     };
 
     return files.reduce((acc = obj, file) => {
+        console.log(file);
         const type = file.file.type.split('/')[0];
         if (acc[type === 'text' || type === 'application' ? 'document' : type]) {
             acc[type === 'text' || type === 'application' ? 'document' : type].push(file);
