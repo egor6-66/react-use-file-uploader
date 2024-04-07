@@ -21,7 +21,9 @@ async function imageHandler(props: imageHandlerProps): Promise<ImageProxy[]> {
 
     for await (const file of Array.from(files)) {
         const updFile =
-            maxImgSizeMb || maxImgWidthOrHeight ? await imageCompression(file, { maxSizeMB: maxImgSizeMb, maxWidthOrHeight: maxImgWidthOrHeight }) : file;
+            maxImgSizeMb || maxImgWidthOrHeight
+                ? new File([await imageCompression(file, { maxSizeMB: maxImgSizeMb, maxWidthOrHeight: maxImgWidthOrHeight })], file.name)
+                : file;
 
         const previewUrl = await readFile(updFile);
         const jbj: Image = {
@@ -34,6 +36,7 @@ async function imageHandler(props: imageHandlerProps): Promise<ImageProxy[]> {
         images.push(fileProxy(jbj, removeItem));
         id++;
     }
+
     return images;
 }
 
