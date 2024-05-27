@@ -17,7 +17,7 @@ async function videoHandler(props: VideoHandlerProps): Promise<VideoProxy[]> {
 
     for await (const file of Array.from(files)) {
         const videoUrl = await readFile(file);
-        const previewUrl = await getVideoCover(file, 2.7);
+        const previewUrl = await getVideoCover(file, 0.1);
 
         const jbj: Video = {
             id,
