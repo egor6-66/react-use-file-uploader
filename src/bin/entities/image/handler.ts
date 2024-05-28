@@ -20,8 +20,21 @@ async function imageHandler(props: imageHandlerProps): Promise<ImageProxy[]> {
     let id = 0;
 
     for await (const file of Array.from(files)) {
-        const blob = await imageCompression(file, { maxSizeMB: maxImgSizeMb, maxWidthOrHeight: maxImgWidthOrHeight, fileType: 'jpg' });
-        const updFile = maxImgSizeMb || maxImgWidthOrHeight ? new File([blob], file.name, { type: blob.type }) : file;
+        const accept = file.name.split('.').pop();
+
+        const getFile = async () => {
+            if (accept === 'gif' || !maxImgSizeMb || !maxImgWidthOrHeight) {
+                return file;
+            }
+            const blob = await imageCompression(file, {
+                maxSizeMB: maxImgSizeMb,
+                maxWidthOrHeight: maxImgWidthOrHeight,
+                fileType: file.name.split('.').pop(),
+            });
+            return new File([blob], file.name, { type: blob.type });
+        };
+
+        const updFile = await getFile();
 
         const previewUrl = await readFile(updFile);
         const jbj: Image = {
